@@ -11,8 +11,8 @@ This project is a joint work done by **Melisa Maidana Capitan** (m.maidanacapita
 
 The calcium imaging program have two ways of working, you can choose to run:
 
-* Pipeline
-* Pipeline_parameters_settings
+* *Pipeline*
+* *Pipeline_parameters_settings*
 
 The pipeline code run the all pipeline with define parameters that you can find on the SQL database,
 I will come back to the workability of this pipeline later.
@@ -22,8 +22,10 @@ or a specific session for set up the more accurate parameters for this session o
 
 The parameters settings pipeline plot for your different picture of each for you to choose the cropping region 
 or the filter that you want to use for example.
+
 You can run with this pipeline every step that you want but is not necessary and useful to run all the steps in row with this pipeline.
 Once the parameters choose and upgrade on the database you can return to use the global pipeline.
+
 Now that the difference between the two pipelines are explained, I will go more in details about the general use of the pipeline.
 
 For a normal use of the pipeline you are not obligate to go through the organization of each steps, you can just run this pipeline. 
@@ -61,18 +63,13 @@ After setting those settings the pipeline will ask you which steps you want to r
 
  I will come back later the use and option of this different steps. After running the steps that you select the final question of the pipeline is if you want to run other steps with the same parameters meaning the same mouse, sessions, and trial. If you decide to do not run another step the pipeline stop every process that can still run and display the goodbye message.
 
-
-
 ### 1. Decoding
-
 
 Decodes the raw files with Inscopix.
 
 This function needs **the mouse number**, **the session**, and **trials** that you want to decode.
 
-
 ### 2. Cropping
-
 
 Crop the region of interest (ROI) for later analysis. 
 
@@ -83,7 +80,6 @@ You do not need to specify here the decoding version because is by default versi
 You will be ask here which cropping region you want to applicate, for visualization purpose you can choose to run first pipeline_parameters_settings, choose the parameters that you want and after applicate those parameters for the all session.
 The spatial cropping points are referred to the selected interval. y1: start point in y axes, y2: end point in y axes. z1: start point in z axes, z2: end point in z axes. 
 Changes in the size of the FOV of course will lead to changes in the initial condition, that can lead to huge differences in the extraction. Do not forget to verify before generalizing your parameters to a bigger FOV. 
-
 
 ### 3. Motion correction
 
@@ -100,7 +96,6 @@ Strides size and overlap are relevant parameters if 'pw_rigid' mode is use.
 
 Optimal parameters correspond to --- values of crispness. The script prints in the screen the full dictionary corresponding to the optimal ones. 
 
-
 ### 4. Equalizer
 
 This step should be run with to main objectives. 
@@ -113,19 +108,14 @@ The equalization procedure consists in mapping the histogram of pixel values of 
 It is known that bleaching diminishes the quality of the image turning it darker. The idea here is to use the histogram of the first recording videos as a template to match the following videos.
 
 
-26/11/2019 This function is under construction but will take parameters: 
-
-	parameters_equalizer = {'make_template_from_trial': '6_R', 'equalizer': 'histogram_matching', 'histogram_step': h_step}
-
-
-
 	#make_template_from_trial < - Refers to where the reference histogram is taking from
 	#equalizer <- Sets the method to histogram matching. There are other methods like exponential fitting, or mean equalization that are not yet implemented. 
 	#a part of the code also produces the histogram to verify equalization. h_step sets the sets the bin size
 
 
-### 5.Alignment 
+### 5.Alignment
 
+It applies methods from the CaImAn package used originally in motion correction to do alignment.
 
 ### 6. Source extraction
 
@@ -133,34 +123,51 @@ Source extraction can be run both in the server and it the local machine, but ag
 
 Source extraction parameters as specified in a dictionary as follows : 
 
-	# parameters for source extraction and deconvolution
-	p = 1               # order of the autoregressive system
-	K = None            # upper bound on number of components per patch, in general None
-	gSig = (3, 3)       # gaussian width of a 2D gaussian kernel, which approximates a neuron
-	gSiz = (13, 13)     # average diameter of a neuron, in general 4*gSig+1
-	Ain = None          # possibility to seed with predetermined binary masks
-	merge_thr = .7      # merging threshold, max correlation allowed
-	rf = 40             # half-size of the patches in pixels. e.g., if rf=40, patches are 80x80
-	stride_cnmf = 20    # amount of overlap between the patches in pixels
-	#                     (keep it at least large as gSiz, i.e 4 times the neuron size gSig)
-	tsub = 2            # downsampling factor in time for initialization,
-	#                     increase if you have memory problems
-	ssub = 1            # downsampling factor in space for initialization,
-	#                     increase if you have memory problems
-	#                     you can pass them here as boolean vectors
-	low_rank_background = None  # None leaves background of each patch intact,
-	#                     True performs global low-rank approximation if gnb>0
-	gnb = 0             # number of background components (rank) if positive,
-	#                     else exact ring model with following settings
-	#                         gnb= 0: Return background as b and W
-	#                         gnb=-1: Return full rank background B
-	#                         gnb<-1: Don't return background
-	nb_patch = 0        # number of background components (rank) per patch if gnb>0,
-	#                     else it is set automatically
-	min_corr = .8       # min peak value from correlation image
-	min_pnr = 10        # min peak to noise ration from PNR image
-	ssub_B = 2          # additional downsampling factor in space for background
-	ring_size_factor = 1.4  # radius of ring is gSiz*ring_size_factor
+parameters for source extraction and deconvolution
+
+p = 1 -> order of the autoregressive system
+
+K = None -> upper bound on number of components per patch, in general None
+
+gSig = (3, 3) -> gaussian width of a 2D gaussian kernel, which approximates a neuron
+
+gSiz = (13, 13) -> average diameter of a neuron, in general 4*gSig+1
+
+Ain = None -> possibility to seed with predetermined binary masks
+
+merge_thr = .7 -> merging threshold, max correlation allowed
+
+rf = 40 -> half-size of the patches in pixels. e.g., if rf=40, patches are 80x80
+
+stride_cnmf = 20    # amount of overlap between the patches in pixels
+                    (keep it at least large as gSiz, i.e 4 times the neuron size gSig)
+		    
+tsub = 2            # downsampling factor in time for initialization,
+                     increase if you have memory problems
+		     
+ssub = 1            # downsampling factor in space for initialization,
+                     increase if you have memory problems
+                     you can pass them here as boolean vectors
+		     
+low_rank_background = None  # None leaves background of each patch intact,
+                     True performs global low-rank approximation if gnb>0
+		     
+gnb = 0             # number of background components (rank) if positive,
+                     else exact ring model with following settings
+                         gnb= 0: Return background as b and W
+                         gnb=-1: Return full rank background B
+                         gnb<-1: Don't return background
+			 
+nb_patch = 0        # number of background components (rank) per patch if gnb>0,
+                     else it is set automatically
+		     
+min_corr = .8       # min peak value from correlation image
+
+min_pnr = 10        # min peak to noise ration from PNR image
+
+ssub_B = 2          # additional downsampling factor in space for background
+
+ring_size_factor = 1.4  # radius of ring is gSiz*ring_size_factor
 
 
 The script runs different selections of gSig (gSiz = 4 * gSig + 1) and saves the resulting corr and pnr summary image (as well as the combination) in '/home/sebastian/Documents/Melisa/calcium_imaging_analysis/data/interim/source_extraction/trial_wise/meta/figures/corr_pnr/'. From here exploration of the effect of different gSig on the summary images can be done.
