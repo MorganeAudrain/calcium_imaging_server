@@ -1,51 +1,12 @@
 # Radboud Memory Dynamics - Calcium Imaging Analysis
 
-
 This is the main calcium imaging analysis tool for the Radboud Memory Dynamics group.
 
 The project structure is based on Cookie cutter Data Science by Driven Data. The analysis tools are provided by CaImAn by Flatiron Institute. 
 
-This project is a joint work done by Melisa Maidana Capitan (m.maidanacapitan@donders.ru.nl),
-Casper ten Dam, Sebastian Tiesmeyer, Morgane Audrain under the supervision of Francesco Battaglia. 
+This project is a joint work done by **Melisa Maidana Capitan** (m.maidanacapitan@donders.ru.nl),
+**Casper ten Dam**, **Sebastian Tiesmeyer**, **Morgane Audrain** under the supervision of **Francesco Battaglia**. 
 
-## Project Organization
-
-    
-    ├── LICENSE
-    ├── Makefile           <- Makefile with commands like `make data` or `make train`
-    ├── README.md          <- The top-level README for developers using this project.
-    ├── data
-    │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
-    │   ├── processed      <- The final, canonical data sets for modeling.
-    │   └── raw            <- The original, immutable data dump.
-    │
-    ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
-    │
-    ├── models             <- Trained and serialized models, model predictions, or model summaries
-    │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials, and a short `-` delimited description, e.g.
-    │                         `1.0-jqp-initial-data-exploration`.
-    │
-    ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-    │
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
-    │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
-    │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
-    │   │
-    │   ├── data           <- Scripts to download or generate data
-    │   │   └── make_dataset.py
-    │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
-    
 ## General 
 
 The calcium imaging program have two ways of working, you can choose to run:
@@ -80,23 +41,23 @@ When you start the pipeline, you will be asked to complete some settings:
 
 After setting those settings the pipeline will ask you which steps you want to run. The choice that you have it between:
 
-* Decoding
+* **Decoding**
 
-* Cropping
+* **Cropping**
 
-* Motion correction
+* **Motion correction**
 
-* Alignment
+* **Alignment**
 
-* Equalization
+* **Equalization**
 
-* Source extraction
+* **Source extraction**
 
-* Component evaluation
+* **Component evaluation**
 
-* Registration
+* **Registration**
 
-* All
+* **All**
 
  I will come back later the use and option of this different steps. After running the steps that you select the final question of the pipeline is if you want to run other steps with the same parameters meaning the same mouse, sessions, and trial. If you decide to do not run another step the pipeline stop every process that can still run and display the goodbye message.
 
@@ -107,7 +68,7 @@ After setting those settings the pipeline will ask you which steps you want to r
 
 Decodes the raw files with Inscopix.
 
-This function needs *the mouse number*, *the session*, and *trials* that you want to decode.
+This function needs **the mouse number**, **the session**, and **trials** that you want to decode.
 
 
 ### 2. Cropping
