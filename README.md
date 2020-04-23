@@ -78,7 +78,9 @@ This step takes a decoded file and crop it according to specified cropping point
 This input is a tif file and the output is a tif file as well.
 You do not need to specify here the decoding version because is by default version one. 
 You will be ask here which cropping region you want to applicate, for visualization purpose you can choose to run first pipeline_parameters_settings, choose the parameters that you want and after applicate those parameters for the all session.
+
 The spatial cropping points are referred to the selected interval. y1: start point in y axes, y2: end point in y axes. z1: start point in z axes, z2: end point in z axes. 
+
 Changes in the size of the FOV of course will lead to changes in the initial condition, that can lead to huge differences in the extraction. Do not forget to verify before generalizing your parameters to a bigger FOV. 
 
 ### 3. Motion correction
