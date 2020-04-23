@@ -108,9 +108,9 @@ The equalization procedure consists in mapping the histogram of pixel values of 
 It is known that bleaching diminishes the quality of the image turning it darker. The idea here is to use the histogram of the first recording videos as a template to match the following videos.
 
 
-	#make_template_from_trial < - Refers to where the reference histogram is taking from
-	#equalizer <- Sets the method to histogram matching. There are other methods like exponential fitting, or mean equalization that are not yet implemented. 
-	#a part of the code also produces the histogram to verify equalization. h_step sets the sets the bin size
+make_template_from_trial < - Refers to where the reference histogram is taking from
+equalizer <- Sets the method to histogram matching. There are other methods like exponential fitting, or mean equalization that are not yet implemented. 
+a part of the code also produces the histogram to verify equalization. h_step sets the sets the bin size
 
 
 ### 5.Alignment
@@ -170,7 +170,7 @@ ssub_B = 2          # additional downsampling factor in space for background
 ring_size_factor = 1.4  # radius of ring is gSiz*ring_size_factor
 
 
-The script runs different selections of gSig (gSiz = 4 * gSig + 1) and saves the resulting corr and pnr summary image (as well as the combination) in '/home/sebastian/Documents/Melisa/calcium_imaging_analysis/data/interim/source_extraction/trial_wise/meta/figures/corr_pnr/'. From here exploration of the effect of different gSig on the summary images can be done.
+The script runs different selections of gSig (gSiz = 4 * gSig + 1) and saves the resulting corr and pnr summary image (as well as the combination) in . From here exploration of the effect of different gSig on the summary images can be done.
 
 Later exploration of min_corr and min_pnr can be done. The scripts creates a bunch of histograms to get an intuitive idea of the values of corr and pnr of a video. 
 
@@ -188,42 +188,10 @@ Component evaluation parameters are 3: minimal value of signal to noise ration i
 
 Componente evaluation parameters as specified in a dictionary as follows : 
 
-	parameters_component_evaluation = {'min_SNR': 3,
-                                   'rval_thr': 0.85,
-                                   'use_cnn': False}
-
 
 The script proposed runs for all source extraction versions selected different selection of component evaluation parameters and makes some plot where accepted and rejected components can be seen in the contour plot and also in  the traces ( plot_contours_evaluated and plot_traces_multiple_evaluated)
 
 
 ### 8.Registration
-
-
-
-Bleaching effect ===> Because of continuous exposure to the light of the microscope, the image gets bleached. The effect of the bleaching can be seen in figures save in the folders: 
-
-'/home/sebastian/Documents/Melisa/calcium_imaging_analysis/data/interim/source_extraction/session_wise/meta/figures/contours/'
-
-and
-
-'/home/sebastian/Documents/Melisa/calcium_imaging_analysis/data/interim/source_extraction/trial_wise/meta/figures/fig:corrpnrphotobleaching56165.png'
-
-In the later the mean of the pnr and correlation image is taken, and the figure shows the evaluation of the mean value over different days (Implement this as a separate part from source extraction to make it faster, because only the corr and pnr image are required).
-
-In the first folder, there are different figures that shows the bleaching effect in the source extraction by showing the contours of different trials within a day and using different parameters for the extraction. Visual inspection can show that during the first trial more neurons are detected, and during late trials that corr image gets blurier and less amount of neurons are detected. 
-
-Next problem is then how to select source extraction parameters (and component evaluation parameters) that are useful for all the days, and that are chosen with a 'good enough' criteria. Three different paths are being explore here. 
-
-
-1) Looking for optimality ===> Use the same parameter for every day. For doing so, source extraction and component evaluation is performed in a small cropped region with a intensive parameter exploration. First idea is to select the source extraction and component evaluation parameters that near to a border transition from accepting every neuron in the last day maximize the cell counting in the last days while minimizing the false positive counting (using same source extraction and component evaluation params) in the first day.
-
-2) Template matching ===> Based on the assumption that if a neuron is detected during the first trial, it should also be there for the later trials, once parameters for the first trial has been selected, use the neural footprint as a template for the other trials. For this, make an exploration of source extraction parameters during every other trial and select the one that maximizes overlapping or matching between new selected neurons and the ones selected during the first trial.
-
-3) Source extraction of all the trials together. For this, it is important first to do the alignment between different trials. Use motion correction for alignment and run source extraction and component evaluation for everything together. NEW SUGGESTION BT F.STELLA (IN DEVELOPMENT): Verify source extraction during resting periods. 	 
-
-
-
-Finally, compare the results ==> compare cell counting, final footprints and calcium traces ! 
-
 
 
